@@ -61,30 +61,39 @@ bool intersect(AABB aabb1, AABB aabb2) {
 
 	if (nbPoint1 < nbPoint2) {
 		// aabb1 has less points so we will work with it (less processing)
-		// now, we are going to use the contain function define above to check each coordinate of the rectangle
-		for (int i = aabb1.left; i <= aabb1.right; i++) { // process the x axis of aabb1
-			for (int j = aabb1.top; j <= aabb1.bottom; j++) { // process the y axis of aabb1
+		// now, we are going to use the contain function define above to check
+		// each coordinate of the rectangle
+
+		// process the x axis of aabb1
+		for (int i = aabb1.left; i <= aabb1.right; i++) { 
+			// process the y axis of aabb1
+			for (int j = aabb1.top; j <= aabb1.bottom; j++) { 
 				pt.x = i; // assign x to the struct Point
 				pt.y = j; // assign y to the struct Point
-				if (contain(aabb2, pt)) { // compare each point to the second rectangle
+				 // compare each point to the second rectangle
+				if (contain(aabb2, pt)) {
 					return true;
 				}
 			}
 		}
-		return false; // if code goes here, it means contain never returned true, so the rectangle do not have any intersect point
+		// if code goes here, it means contain never returned true,
+		// so the rectangle do not have any intersect point
+		return false; 
 	} else {
-		// aabb 2 has less points so we will work with it (less processing)
-		// now, we are going to use the contain function define above to check each coordinate of the rectangle
-		for (int i = aabb2.top; i < aabb2.bottom; i++) { // process the x axis of aabb2
-			for (int j = aabb2.left; j < aabb2.right; j++) { // process the y axis of aabb2
+		// same as above, except with other rectangle if he has less points
+		// process the x axis of aabb2
+		for (int i = aabb2.top; i < aabb2.bottom; i++) { 
+			// process the y axis of aabb2
+			for (int j = aabb2.left; j < aabb2.right; j++) { 
 				pt.x = i; // assign x to the struct Point
 				pt.y = j; // assign y to the struct Point
-				if (contain(aabb1, pt)) { // compare each point to the first rectangle
+				// compare each point to the first rectangle
+				if (contain(aabb1, pt)) { 
 					return true;
 				}
 			}
 		}
-		return false; // if code goes here, it means contain never returned true, so the rectangle do not have any intersect point
+		return false;
 	}
 }
 
@@ -173,23 +182,29 @@ bool may_collide(AABB collideWith, AABB initialAABB, AABB finalAABB) {
 	tr2.y = finalAABB.top;
 
 
-	/* The objective here is to calculate the rise of the lines formed by the junction
-	 * of the original's corners and the final position's corners.
+	/* The objective here is to calculate the rise of the lines formed by the 
+	 * junction of the original's corners and the final position's corners.
 	 * The x coordinate is incremented by 1 each time and its y coordinate
  	 * on the line is deduced using y = mx + c (where c is calculated earlier).
-	 * This y float value is then truncated and compared to the possible collision AABB
-	 * (the AABB uses only integers).
+	 * This y float value is then truncated and compared to the possible
+	 * collision AABB (the AABB uses only integers).
 	 *
 	 * Here, I have to pay attention to the way C++ cast values during operations
 	 * so that I can use the results in the right type.
+	 *
+	 * I will only comment the first block of code, the others are basically
+	 * the same, but with different points
 	*/
 	cout.precision(5);
-	if (intersect(movementBox, collideWith)) { // if movementBox and collideWith are touching each other, it means that the movement may be colliding
+	// if movementBox and collideWith are touching each other, 
+	// it means that the movement may be colliding
+	if (intersect(movementBox, collideWith)) { 
 		// this case is for handling rectangle moving in diagonals
 		for (int i = 0; i <= 3; i++) {
 			// Check line formed by bottom left corners
 			if (i == 0) {
 				cout << "case 0" << endl;
+				// depending where the original rectangle is
 				if (bl2.x < bl1.x) {
 					endX = bl1.x;
 					startX = bl2.x;
@@ -201,16 +216,19 @@ bool may_collide(AABB collideWith, AABB initialAABB, AABB finalAABB) {
 					endY = bl2.y;
 					startY = bl1.y;
 				}
-				if (endX == startX || endY == startY) { // if we reach the end, continue to next line
+
+				if (endX == startX || endY == startY) { 
 					// do nothing, keeping this just in case it is needed
 				} else {
-					m = static_cast<double>((bl2.y - bl1.y)) / static_cast<double>((bl2.x - bl1.x)); // calculate the rise, may need to check if bl2 gt bl1 to avoid negative value
+					// calculate the rise
+					m = static_cast<double>((bl2.y - bl1.y)) / static_cast<double>((bl2.x - bl1.x)); 
 					c = bl1.y - (m * bl1.x); // c = y - mx
 					cout << fixed << "m: " << m << " c: " << c << endl;
 					for (int x = startX; x <= endX; x++) {
 						y_float = (m * x) + c; // get the float value of y
 						cout << "x: " << x;
-						y = static_cast<int>(y_float + 1); // round to int, and round up every values to match the scale
+						// round to int, and round up every values to match the scale
+						y = static_cast<int>(y_float + 1);
 						cout << " // y float: " << y_float << endl;
 						if (contain(collideWith, x, y)) {
 							return true;
@@ -241,14 +259,13 @@ bool may_collide(AABB collideWith, AABB initialAABB, AABB finalAABB) {
 					endY = br2.y;
 					startY = br1.y;
 				}
-				if (endX == startX || endY == startY) { // if we reach the end, continue to next line
-					// do nothing
-				} else {
-					m = static_cast<double>((br2.y - br1.y)) / static_cast<double>((br2.x - br1.x)); // calculate the rise, may need to check if bl2 gt bl1 to avoid negative value
-					c = br1.y - (m * br1.x); // c = y - mx
+				if (endX == startX || endY == startY)
+				else {
+					m = static_cast<double>((br2.y - br1.y)) / static_cast<double>((br2.x - br1.x)); 
+					c = br1.y - (m * br1.x);
 					cout << "m: " << m << " c: " << c << endl;
 					for (int x = startX; x <= endX; x++) {
-						y_float = (m * x) + c; // get the float value of y
+						y_float = (m * x) + c; 
 						cout << "x: " << x;
 						y = static_cast<int>(y_float + 1); // round to int
 						cout << " // y float: " << y_float << endl;
@@ -273,16 +290,14 @@ bool may_collide(AABB collideWith, AABB initialAABB, AABB finalAABB) {
 					endY = tl2.y;
 					startY = tl1.y;
 				}
-				if (endX == startX || endY == startY) { // if we reach the end, continue to next line
-					// do nothing
-				} else {
+				if (endX == startX || endY == startY)
+				else {
 					m = static_cast<double>((tl2.y - tl1.y)) / static_cast<double>((tl2.x - tl1.x));
-					c = tl1.y - (m * tl1.x); // c = y - mx
-					//cout << "m: " << m << "c: " << c << endl;
+					c = tl1.y - (m * tl1.x);
 					for (int x = startX; x <= endX; x++) {
-						y_float = (m * x) + c; // get the float value of y
+						y_float = (m * x) + c;
 						cout << "x: " << x;
-						y = static_cast<int>(y_float + 1); // round to int
+						y = static_cast<int>(y_float + 1);
 						cout << " // y float: " << y_float << endl;
 						if (contain(collideWith, x, y)) {
 							return true;
@@ -305,16 +320,14 @@ bool may_collide(AABB collideWith, AABB initialAABB, AABB finalAABB) {
 					endY = tr2.y;
 					startY = tr1.y;
 				}
-				if (endX == startX || endY == startY) { // if we reach the end, continue to next line
-					// do nothing
-				} else {
-					m = static_cast<double>((tr2.y - tr1.y)) / static_cast<double>((tr2.x - tr1.x)); // calculate the rise, may need to check if bl2 gt bl1 to avoid negative value
-					c = tr1.y - (m * tr1.x); // c = y - mx
-					//cout << "m: " << m << "c: " << c << endl;
+				if (endX == startX || endY == startY) {
+				else {
+					m = static_cast<double>((tr2.y - tr1.y)) / static_cast<double>((tr2.x - tr1.x));
+					c = tr1.y - (m * tr1.x); 
 					for (int x = startX; x <= endX; x++) {
-						y_float = (m * x) + c; // get the float value of y
+						y_float = (m * x) + c;
 						cout << "x: " << x;
-						y = static_cast<int>(y_float + 1); // round to int
+						y = static_cast<int>(y_float + 1);
 						cout << " // y float: " << y_float << endl;
 						if (contain(collideWith, x, y)) {
 							return true;
@@ -323,17 +336,17 @@ bool may_collide(AABB collideWith, AABB initialAABB, AABB finalAABB) {
 				}
 			}
 		}
-		return false; // if code goes here, none of the points above matched, so return false
+		// if code goes here, none of the points above matched, so return false
+		return false;
 	} else {
 		return false;
 	}
 }
 
 /*
- * This function basically does the same thing than may_collide, except that some code
- * is added to obtain the top left corner of the sliding AABB
- * Some other parts are modified too, taking into account may_collide's return, between
- * things.
+ * This function basically does the same thing than may_collide, except that 
+ * some code is added to obtain the top left corner of the sliding AABB
+ * Some other parts are modified too, taking into account may_collide's return.
 */
 bool collision_point(AABB collideWith, AABB initialAABB, AABB finalAABB, Point &topleftCorner) {
 	if (may_collide(collideWith, initialAABB, finalAABB	)) { // collision
@@ -408,18 +421,21 @@ bool collision_point(AABB collideWith, AABB initialAABB, AABB finalAABB, Point &
 					endY = bl2.y;
 					startY = bl1.y;
 				}
-				if (endX == startX || endY == startY) { // if we reach the end, continue to next line
+				if (endX == startX || endY == startY) {
 					// do nothing, keeping this just in case it is needed
 				} else {
-					m = static_cast<double>((bl2.y - bl1.y)) / static_cast<double>((bl2.x - bl1.x)); // calculate the rise, may need to check if bl2 gt bl1 to avoid negative value
+					// calculate the rise, may need to check if bl2 gt bl1 to avoid negative value
+					m = static_cast<double>((bl2.y - bl1.y)) / static_cast<double>((bl2.x - bl1.x));
 					c = bl1.y - (m * bl1.x); // c = y - mx
 					cout << fixed << "m: " << m << " c: " << c << endl;
 					for (int x = startX; x <= endX; x++) {
 						y_float = (m * x) + c; // get the float value of y
 						cout << "x: " << x;
-						y = static_cast<int>(y_float + 1); // round to int, and round up every values to match the scale
+						// round to int, and round up every values to match the scale
+						y = static_cast<int>(y_float + 1);
 						cout << " // y float: " << y_float << endl;
 						if (contain(collideWith, x, y)) {
+							// if contains is true, simply find coordinates
 							topleftCorner.x = x;
 							topleftCorner.y = y - (initialAABB.bottom - initialAABB.top);							
 							return true;
@@ -449,16 +465,15 @@ bool collision_point(AABB collideWith, AABB initialAABB, AABB finalAABB, Point &
 					endY = br2.y;
 					startY = br1.y;
 				}
-				if (endX == startX || endY == startY) { // if we reach the end, continue to next line
-					// do nothing
-				} else {
-					m = static_cast<double>((br2.y - br1.y)) / static_cast<double>((br2.x - br1.x)); // calculate the rise, may need to check if bl2 gt bl1 to avoid negative value
-					c = br1.y - (m * br1.x); // c = y - mx
+				if (endX == startX || endY == startY)
+				else {
+					m = static_cast<double>((br2.y - br1.y)) / static_cast<double>((br2.x - br1.x));
+					c = br1.y - (m * br1.x); 
 					cout << "m: " << m << " c: " << c << endl;
 					for (int x = startX; x <= endX; x++) {
-						y_float = (m * x) + c; // get the float value of y
+						y_float = (m * x) + c;
 						cout << "x: " << x;
-						y = static_cast<int>(y_float + 1); // round to int
+						y = static_cast<int>(y_float + 1); 
 						cout << " // y float: " << y_float << endl;
 						if (contain(collideWith, x, y)) {
 							topleftCorner.x = x - (initialAABB.right - initialAABB.left);
@@ -483,14 +498,12 @@ bool collision_point(AABB collideWith, AABB initialAABB, AABB finalAABB, Point &
 					endY = tl2.y;
 					startY = tl1.y;
 				}
-				if (endX == startX || endY == startY) { // if we reach the end, continue to next line
-					// do nothing
-				} else {
+				if (endX == startX || endY == startY)
+				else {
 					m = static_cast<double>((tl2.y - tl1.y)) / static_cast<double>((tl2.x - tl1.x));
-					c = tl1.y - (m * tl1.x); // c = y - mx
-					//cout << "m: " << m << "c: " << c << endl;
+					c = tl1.y - (m * tl1.x);
 					for (int x = startX; x <= endX; x++) {
-						y_float = (m * x) + c; // get the float value of y
+						y_float = (m * x) + c;
 						cout << "x: " << x;
 						y = static_cast<int>(y_float + 1); // round to int
 						cout << " // y float: " << y_float << endl;
@@ -516,10 +529,9 @@ bool collision_point(AABB collideWith, AABB initialAABB, AABB finalAABB, Point &
 					endY = tr2.y;
 					startY = tr1.y;
 				}
-				if (endX == startX || endY == startY) { // if we reach the end, continue to next line
-					// do nothing
-				} else {
-					m = static_cast<double>((tr2.y - tr1.y)) / static_cast<double>((tr2.x - tr1.x)); // calculate the rise, may need to check if bl2 gt bl1 to avoid negative value
+				if (endX == startX || endY == startY) {
+				else {
+					m = static_cast<double>((tr2.y - tr1.y)) / static_cast<double>((tr2.x - tr1.x));
 					c = tr1.y - (m * tr1.x); // c = y - mx
 					//cout << "m: " << m << "c: " << c << endl;
 					for (int x = startX; x <= endX; x++) {
@@ -537,6 +549,7 @@ bool collision_point(AABB collideWith, AABB initialAABB, AABB finalAABB, Point &
 			}
 		}
 		// this return is not mandatory, as this case can't happen
+		// putting it to remove the warning
 		return false;
 	} else { // no collision
 		return false;

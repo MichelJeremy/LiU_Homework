@@ -1,0 +1,61 @@
+may_collide  300 20 40 400   13  50 30 30  500 237 30 30  t
+may_collide  300 20 40 400  500 237 30 30   13  50 30 30  t
+
+may_collide  30 200 400 40   13  50 30 30  500 237 30 30  t
+may_collide  30 200 400 40  500 237 30 30   13  50 30 30  t
+
+may_collide  30 200 298 40   13  50 30 30  500 237 30 30  t
+may_collide  30 200 298 40  500 237 30 30   13  50 30 30  t
+
+may_collide  30 200 297 40   13  50 30 30  500 237 30 30  t
+may_collide  30 200 297 40  500 237 30 30   13  50 30 30  t
+
+may_collide  30 270 297 40   13  50 30 30  500 237 30 30  f
+may_collide  30 270 297 40  500 237 30 30   13  50 30 30  f
+
+
+collision_point  300 20 40 400   13  50 30 30  500 237 30 30  t
+collision_point  300 20 40 400  500 237 30 30   13  50 30 30  t
+
+collision_point  30 200 400 40   13  50 30 30  500 237 30 30  t
+collision_point  30 200 400 40  500 237 30 30   13  50 30 30  t
+
+collision_point  30 200 298 40   13  50 30 30  500 237 30 30  t
+collision_point  30 200 298 40  500 237 30 30   13  50 30 30  t
+
+collision_point  30 200 297 40   13  50 30 30  500 237 30 30  f
+collision_point  30 200 297 40  500 237 30 30   13  50 30 30  f
+
+intersect  50  50 100 100  90 90 120 120  t
+
+intersect  50 100 100 100  90 90 120 120  t
+intersect  50 150 100 100  90 90 120 120  t
+
+intersect 100 150 100 100  90 90 120 120  t
+intersect 150 150 100 100  90 90 120 120  t
+
+intersect 150 100 100 100  90 90 120 120  t
+intersect 150  50 100 100  90 90 120 120  t
+
+intersect 100  50 100 100  90 90 120 120  t
+intersect  50  50 100 100  90 90 120 120  t
+
+intersect 100 100 100 100  90 90 120 120  t
+
+
+intersect  50  50 50 50  150 150 50 50  f
+intersect  50 150 50 50  150 150 50 50  f
+intersect  50 250 50 50  150 150 50 50  f
+
+intersect 150 250 50 50  150 150 50 50  f
+intersect 250 250 50 50  150 150 50 50  f
+
+intersect 250 150 50 50  150 150 50 50  f
+intersect 250  50 50 50  150 150 50 50  f
+
+intersect 150  50 50 50  150 150 50 50  f
+intersect  50  50 50 50  150 150 50 50  f
+
+
+contain  200 200 200 200  300 300  t
+contain  200 200 200 200  600 300  f

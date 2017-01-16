@@ -1,0 +1,9 @@
+11  11  11
+32  48 23  12cookies.jpg
+53  39 44
+54  *whoopsidaisy.jpg*
+15  50  15
+46  21  c:/just/two/numbers.xcf
+42  47  36
+../No/numbers/ON/this/line.bmp
+12 23 34

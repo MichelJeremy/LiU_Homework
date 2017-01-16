@@ -1,0 +1,8 @@
+  1 1 1  /this/is/the/first/brick
+30 40 20
+54   3 4
+5 4   3 C:\This\Brick Is Faulty.png
+1 57 1
+ 41  22 13  ../This/One/Too!!
+46   48   37
+-101 99  76
